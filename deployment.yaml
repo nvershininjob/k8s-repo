@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: nginx-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: prod-web
@@ -17,3 +17,10 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: web-storage
+      volumes:
+      - name: web-storage
+        persistentVolumeClaim:
+          claimName: nginx-pvc
